@@ -7,3 +7,4 @@ export default defineConfig({
   // Use relative base so assets resolve correctly on GitHub Pages/subpaths
   base: './',
 })
+

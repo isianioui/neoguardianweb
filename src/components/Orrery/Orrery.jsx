@@ -496,6 +496,7 @@ const Orrery = () => {
         
         return info;
     };
+    
 
     const addSun = () => {
         try {

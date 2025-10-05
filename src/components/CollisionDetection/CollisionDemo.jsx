@@ -25,6 +25,7 @@ const CollisionDemo = ({ showHeatmap, setShowHeatmap, timeHorizon, setTimeHorizo
     // Load real NEO names from risk_list_neo_data.json
     useEffect(() => {
         const loadNeoNames = async () => {
+            
             try {
                 const response = await fetch(`${import.meta.env.BASE_URL}assets/data/risk_list_neo_data.json`);
                 if (!response.ok) throw new Error('Failed to load NEO data');
