@@ -501,7 +501,7 @@ const Orrery = () => {
         try {
             console.log('addSun called, sceneRef.current:', sceneRef.current);
             const sunTextureLoader = new THREE.TextureLoader();
-            const sunTexture = sunTextureLoader.load('/assets/body_textures/8k_sun.jpg');
+            const sunTexture = sunTextureLoader.load(`${import.meta.env.BASE_URL}assets/body_textures/8k_sun.jpg`);
 
             const geometry = new THREE.SphereGeometry(0.02, DEFAULT_MESH_N, DEFAULT_MESH_N);
             const material = new THREE.MeshBasicMaterial({map: sunTexture});
@@ -532,7 +532,7 @@ const Orrery = () => {
     };
 
     const initializePlanets = async () => {
-        const planets_json = await readJSON('/assets/data/planet_data.json');
+        const planets_json = await readJSON(`${import.meta.env.BASE_URL}assets/data/planet_data.json`);
         if (!planets_json) {
             console.error('Failed to load planet data');
             return;
@@ -559,7 +559,7 @@ const Orrery = () => {
             let planetTexture;
             
             try {
-                planetTexture = planetTextureLoader.load('/assets/body_textures/' + planetTextureName);
+                planetTexture = planetTextureLoader.load(`${import.meta.env.BASE_URL}assets/body_textures/${planetTextureName}`);
             } catch (error) {
                 console.warn(`Failed to load texture for ${planetName}:`, error);
                 // Use a fallback color instead of texture
@@ -619,7 +619,7 @@ const Orrery = () => {
     };
 
     const initializeNeos = async () => {
-        const neos_json = await readJSON('/assets/data/risk_list_neo_data.json');
+        const neos_json = await readJSON(`${import.meta.env.BASE_URL}assets/data/risk_list_neo_data.json`);
         if (!neos_json) {
             console.error('Failed to load NEO data');
             return;
@@ -669,8 +669,8 @@ const Orrery = () => {
     };
 
     const initializeShowers = async () => {
-        const showers_json = await readJSON('/assets/data/stream_dataIAU2022.json');
-        const parentBodies_json = await readJSON('/assets/data/stream_parentbody.json');
+        const showers_json = await readJSON(`${import.meta.env.BASE_URL}assets/data/stream_dataIAU2022.json`);
+        const parentBodies_json = await readJSON(`${import.meta.env.BASE_URL}assets/data/stream_parentbody.json`);
         
         if (!showers_json || !parentBodies_json) {
             console.error('Failed to load shower data');
@@ -868,12 +868,12 @@ const Orrery = () => {
         // Load skybox texture
         try {
             scene.background = new THREE.CubeTextureLoader().load([
-                '/assets/px.png',
-                '/assets/nx.png',
-                '/assets/py.png',
-                '/assets/ny.png',
-                '/assets/pz.png',
-                '/assets/nz.png'
+                `${import.meta.env.BASE_URL}assets/px.png`,
+                `${import.meta.env.BASE_URL}assets/nx.png`,
+                `${import.meta.env.BASE_URL}assets/py.png`,
+                `${import.meta.env.BASE_URL}assets/ny.png`,
+                `${import.meta.env.BASE_URL}assets/pz.png`,
+                `${import.meta.env.BASE_URL}assets/nz.png`
             ]);
         } catch (error) {
             console.warn('Failed to load skybox, using black background:', error);
@@ -1022,7 +1022,7 @@ const Orrery = () => {
         const loadNEORiskData = async () => {
             try {
                 // Use Vite public path to ensure correct asset loading
-                const response = await fetch('/assets/data/risk_list_neo_data.json');
+                const response = await fetch(`${import.meta.env.BASE_URL}assets/data/risk_list_neo_data.json`);
                 if (!response.ok) throw new Error('Failed to load NEO data');
                 return await response.json();
             } catch (error) {
