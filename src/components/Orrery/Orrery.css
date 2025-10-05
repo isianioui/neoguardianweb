@@ -1,0 +1,684 @@
+/* Reset and base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.orrery-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    pointer-events: none;
+}
+
+.orrery-canvas {
+    position: absolute;
+    display: block;
+    z-index: 1;
+    pointer-events: auto;
+    width: 100%;
+    height: 100%;
+}
+
+/* Loading overlay with modern spinner */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    color: #ffffff;
+    backdrop-filter: blur(5px);
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid #64b5f6;
+    border-right: 3px solid #42a5f5;
+    border-radius: 50%;
+    animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    margin-bottom: 30px;
+    box-shadow: 0 0 30px rgba(100, 181, 246, 0.3);
+}
+
+@keyframes spin {
+    0% { 
+        transform: rotate(0deg);
+        box-shadow: 0 0 30px rgba(100, 181, 246, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 50px rgba(100, 181, 246, 0.6);
+    }
+    100% { 
+        transform: rotate(360deg);
+        box-shadow: 0 0 30px rgba(100, 181, 246, 0.3);
+    }
+}
+
+.loading-overlay p {
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+/* Object name display at top */
+.object-name-display {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 28px;
+    font-weight: 600;
+    color: #64b5f6;
+    background: linear-gradient(135deg, rgba(15, 15, 15, 0.9) 0%, rgba(30, 30, 60, 0.9) 100%);
+    padding: 15px 30px;
+    border-radius: 25px;
+    border: 1px solid rgba(100, 181, 246, 0.3);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(100, 181, 246, 0.1);
+    pointer-events: none;
+    z-index: 1500;
+    text-shadow: 0 0 10px rgba(100, 181, 246, 0.3);
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    animation: objectNameSlideIn 0.4s ease-out;
+}
+
+@keyframes objectNameSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Enhanced error overlay */
+.error-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, rgba(15, 15, 15, 0.98) 0%, rgba(30, 30, 60, 0.98) 100%);
+    color: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    z-index: 2000;
+    border: 1px solid rgba(255, 68, 68, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 68, 68, 0.1);
+    backdrop-filter: blur(10px);
+    max-width: 400px;
+    width: 90%;
+}
+
+.error-overlay h3 {
+    color: #ff6b6b;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.error-overlay p {
+    margin-bottom: 25px;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+.error-overlay button {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.error-overlay button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+    background: linear-gradient(135deg, #ff5252 0%, #ff4444 100%);
+}
+
+/* Advanced time controls with modern design */
+.time-controls {
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    z-index: 1000;
+    pointer-events: auto;
+}
+
+.time-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.time-item {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    background: linear-gradient(135deg, rgba(10, 10, 20, 0.9) 0%, rgba(20, 20, 40, 0.9) 100%);
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(100, 181, 246, 0.2);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(100, 181, 246, 0.1);
+    letter-spacing: 0.3px;
+    text-align: center;
+    min-width: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    position: relative;
+    overflow: hidden;
+}
+
+.time-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(100, 181, 246, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.time-item:hover::before {
+    left: 100%;
+}
+
+.time-icon {
+    width: 14px;
+    height: 14px;
+    color: #64b5f6;
+    flex-shrink: 0;
+}
+
+.time-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(10, 10, 20, 0.9) 0%, rgba(20, 20, 40, 0.9) 100%);
+    padding: 10px 16px;
+    border-radius: 25px;
+    border: 1px solid rgba(100, 181, 246, 0.2);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(100, 181, 246, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.time-buttons::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(100, 181, 246, 0.05), transparent);
+    transition: left 0.5s ease;
+}
+
+.time-buttons:hover::before {
+    left: 100%;
+}
+
+.time-btn {
+    background: linear-gradient(135deg, rgba(100, 181, 246, 0.1) 0%, rgba(66, 165, 245, 0.1) 100%);
+    border: 1px solid rgba(100, 181, 246, 0.3);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    position: relative;
+    overflow: hidden;
+}
+
+.time-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(100, 181, 246, 0.3) 0%, transparent 70%);
+    transition: all 0.4s ease;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+.time-btn:hover {
+    background: linear-gradient(135deg, rgba(100, 181, 246, 0.25) 0%, rgba(66, 165, 245, 0.25) 100%);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(100, 181, 246, 0.4), 0 0 0 1px rgba(100, 181, 246, 0.6);
+    border-color: rgba(100, 181, 246, 0.8);
+}
+
+.time-btn:hover::before {
+    width: 100%;
+    height: 100%;
+}
+
+.time-btn:active {
+    transform: translateY(-1px) scale(1.02);
+    transition: all 0.1s ease;
+}
+
+.time-btn svg {
+    width: 16px;
+    height: 16px;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    z-index: 1;
+    position: relative;
+}
+
+.time-btn:hover svg {
+    color: #64b5f6;
+    transform: scale(1.1);
+}
+
+/* Special styling for the "now" button */
+.time-btn:nth-child(3) {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(56, 142, 60, 0.15) 100%);
+    border-color: rgba(76, 175, 80, 0.4);
+}
+
+.time-btn:nth-child(3):hover {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.3) 0%, rgba(56, 142, 60, 0.3) 100%);
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4), 0 0 0 1px rgba(76, 175, 80, 0.6);
+    border-color: rgba(76, 175, 80, 0.8);
+}
+
+.time-btn:nth-child(3):hover svg {
+    color: #4caf50;
+}
+
+/* Modern filter panel */
+.filter-panel {
+    position: fixed;
+    left: 30px;
+    bottom: 30px;
+    width: 320px;
+    font-size: 14px;
+    padding: 25px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(15, 15, 15, 0.95) 0%, rgba(30, 30, 60, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    pointer-events: auto;
+    z-index: 1000;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.filter-panel h3 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #64b5f6;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid rgba(100, 181, 246, 0.2);
+    padding-bottom: 10px;
+}
+
+.filter-panel label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    cursor: pointer;
+    user-select: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+}
+
+.filter-panel label:hover {
+    background: rgba(100, 181, 246, 0.1);
+    transform: translateX(4px);
+}
+
+.filter-panel input[type="checkbox"] {
+    margin-right: 12px;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    appearance: none;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(100, 181, 246, 0.3);
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.filter-panel input[type="checkbox"]:checked {
+    background: linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
+    border-color: #64b5f6;
+}
+
+.filter-panel input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.filter-panel input[type="checkbox"]:hover {
+    border-color: rgba(100, 181, 246, 0.6);
+    box-shadow: 0 0 10px rgba(100, 181, 246, 0.2);
+}
+
+/* Elegant info panel */
+.info-panel {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 340px;
+    font-size: 14px;
+    padding: 25px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(15, 15, 15, 0.95) 0%, rgba(30, 30, 60, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    pointer-events: auto;
+    z-index: 1000;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.info-panel h2 {
+    margin: 0 0 15px 0;
+    font-size: 22px;
+    font-weight: 500;
+    color: #64b5f6;
+    border-bottom: 2px solid rgba(100, 181, 246, 0.2);
+    padding-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.info-panel p {
+    margin: 10px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.9;
+    letter-spacing: 0.2px;
+}
+
+.info-panel p:first-of-type {
+    color: #81c784;
+    font-weight: 500;
+}
+
+/* Debug info panel */
+.debug-panel {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    width: 300px;
+    font-size: 12px;
+    padding: 15px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.1) 0%, rgba(255, 100, 100, 0.1) 100%);
+    border: 1px solid rgba(255, 100, 100, 0.3);
+    color: #ff6b6b;
+    pointer-events: auto;
+    z-index: 1001;
+    backdrop-filter: blur(10px);
+    font-family: 'Courier New', monospace;
+}
+
+.debug-panel h4 {
+    margin: 0 0 10px 0;
+    color: #ff6b6b;
+    font-size: 14px;
+}
+
+.debug-panel ul {
+    margin: 0;
+    padding-left: 15px;
+    list-style-type: none;
+}
+
+.debug-panel li {
+    margin: 5px 0;
+    padding-left: 15px;
+    position: relative;
+}
+
+.debug-panel li:before {
+    content: "⚠";
+    position: absolute;
+    left: 0;
+    color: #ff6b6b;
+}
+
+/* Enhanced responsive design */
+@media (max-width: 1024px) {
+    .filter-panel {
+        width: 280px;
+        left: 20px;
+        bottom: 20px;
+        padding: 20px;
+    }
+    
+    .info-panel {
+        width: 280px;
+        top: 20px;
+        right: 20px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .filter-panel {
+        width: 260px;
+        left: 15px;
+        bottom: 15px;
+        font-size: 13px;
+        padding: 18px;
+    }
+    
+    .info-panel {
+        width: 260px;
+        top: 15px;
+        right: 15px;
+        font-size: 13px;
+        padding: 18px;
+    }
+    
+    .time-item {
+        font-size: 11px;
+        padding: 6px 12px;
+        min-width: 160px;
+    }
+    
+    .time-icon {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .time-btn {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .time-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .time-buttons {
+        padding: 8px 12px;
+        gap: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-panel {
+        width: calc(100vw - 20px);
+        left: 10px;
+        bottom: 10px;
+        font-size: 12px;
+        padding: 15px;
+    }
+    
+    .info-panel {
+        width: calc(100vw - 20px);
+        top: 10px;
+        right: 10px;
+        font-size: 12px;
+        padding: 15px;
+    }
+    
+    .time-controls {
+        bottom: 20px;
+    }
+    
+    .time-item {
+        font-size: 10px;
+        padding: 5px 10px;
+        min-width: 140px;
+    }
+    
+    .time-icon {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .time-btn {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .time-btn svg {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .time-buttons {
+        padding: 6px 10px;
+        gap: 4px;
+    }
+    
+    .loading-overlay p {
+        font-size: 16px;
+    }
+    
+    .loading-spinner {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 25px;
+    }
+}
+
+/* Additional enhancements */
+.filter-panel label span,
+.info-panel p span {
+    color: #64b5f6;
+    font-weight: 500;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Focus states for accessibility */
+.time-btn:focus,
+.filter-panel input[type="checkbox"]:focus,
+.error-overlay button:focus {
+    outline: 2px solid rgba(100, 181, 246, 0.6);
+    outline-offset: 2px;
+}
+
+/* Subtle animations for panels */
+.filter-panel,
+.info-panel {
+    animation: slideInFromSide 0.6s ease-out;
+}
+
+.time-controls {
+    animation: slideInFromBottom 0.6s ease-out;
+}
+
+@keyframes slideInFromSide {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromBottom {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .filter-panel,
+    .info-panel,
+    .time-controls {
+        border: 2px solid #ffffff;
+        background: rgba(0, 0, 0, 0.95);
+    }
+    
+    .time-btn {
+        border: 2px solid #64b5f6;
+    }
+}

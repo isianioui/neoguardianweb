@@ -1,0 +1,560 @@
+.orrey-page {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.orrey-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.page-header {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.header-content {
+    background: linear-gradient(135deg, rgba(10, 10, 20, 0.9) 0%, rgba(20, 20, 40, 0.9) 100%);
+    padding: 12px 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(100, 181, 246, 0.2);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(100, 181, 246, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.header-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(100, 181, 246, 0.05), transparent);
+    transition: left 0.5s ease;
+}
+
+.header-content:hover::before {
+    left: 100%;
+}
+
+.header-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background: linear-gradient(135deg, rgba(100, 181, 246, 0.2) 0%, rgba(66, 165, 245, 0.2) 100%);
+    border-radius: 50%;
+    margin-bottom: 8px;
+    border: 1px solid rgba(100, 181, 246, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.header-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(100, 181, 246, 0.3) 0%, transparent 70%);
+    transition: all 0.4s ease;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+.header-content:hover .header-icon::before {
+    width: 100%;
+    height: 100%;
+}
+
+.header-icon svg {
+    width: 18px;
+    height: 18px;
+    color: #64b5f6;
+    z-index: 1;
+    position: relative;
+}
+
+.page-header h1 {
+    color: #ffffff;
+    font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 10px rgba(100, 181, 246, 0.3);
+    background: linear-gradient(135deg, #ffffff 0%, #64b5f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.page-header p {
+    color: #cccccc;
+    font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0 0 10px 0;
+    letter-spacing: 0.3px;
+    opacity: 0.9;
+}
+
+/* Collision Detection Controls */
+.collision-controls {
+    margin-top: 8px;
+    pointer-events: auto;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.collision-toggle {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, rgba(100, 181, 246, 0.1) 0%, rgba(66, 165, 245, 0.1) 100%);
+    border: 1px solid rgba(100, 181, 246, 0.3);
+    border-radius: 20px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(20px);
+    font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.3px;
+}
+
+.collision-toggle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(100, 181, 246, 0.3) 0%, transparent 70%);
+    transition: all 0.4s ease;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+.collision-toggle:hover {
+    background: linear-gradient(135deg, rgba(100, 181, 246, 0.25) 0%, rgba(66, 165, 245, 0.25) 100%);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(100, 181, 246, 0.4), 0 0 0 1px rgba(100, 181, 246, 0.6);
+    border-color: rgba(100, 181, 246, 0.8);
+}
+
+.collision-toggle:hover::before {
+    width: 100%;
+    height: 100%;
+}
+
+.collision-toggle.active {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(56, 142, 60, 0.2) 100%);
+    border-color: rgba(76, 175, 80, 0.6);
+    color: #4caf50;
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3), 0 0 0 1px rgba(76, 175, 80, 0.4);
+}
+
+.collision-toggle.active:hover {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.3) 0%, rgba(56, 142, 60, 0.3) 100%);
+    box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4), 0 0 0 1px rgba(76, 175, 80, 0.6);
+}
+
+.toggle-icon {
+    width: 12px;
+    height: 12px;
+    transition: all 0.3s ease;
+    z-index: 1;
+    position: relative;
+}
+
+.collision-toggle:hover .toggle-icon {
+    transform: scale(1.1);
+}
+
+.collision-toggle.active .toggle-icon {
+    color: #4caf50;
+}
+
+/* Heatmap Toggle Button */
+.heatmap-toggle {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, rgba(255, 152, 0, 0.1) 0%, rgba(255, 193, 7, 0.1) 100%);
+    border: 1px solid rgba(255, 152, 0, 0.3);
+    border-radius: 20px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(20px);
+    font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.3px;
+}
+
+.heatmap-toggle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 152, 0, 0.3) 0%, transparent 70%);
+    transition: all 0.4s ease;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+.heatmap-toggle:hover {
+    background: linear-gradient(135deg, rgba(255, 152, 0, 0.25) 0%, rgba(255, 193, 7, 0.25) 100%);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(255, 152, 0, 0.4), 0 0 0 1px rgba(255, 152, 0, 0.6);
+    border-color: rgba(255, 152, 0, 0.8);
+}
+
+.heatmap-toggle:hover::before {
+    width: 100%;
+    height: 100%;
+}
+
+.heatmap-toggle.active {
+    background: linear-gradient(135deg, rgba(255, 152, 0, 0.2) 0%, rgba(255, 193, 7, 0.2) 100%);
+    border-color: rgba(255, 152, 0, 0.6);
+    color: #ff9800;
+    box-shadow: 0 8px 25px rgba(255, 152, 0, 0.3), 0 0 0 1px rgba(255, 152, 0, 0.4);
+}
+
+.heatmap-toggle.active:hover {
+    background: linear-gradient(135deg, rgba(255, 152, 0, 0.3) 0%, rgba(255, 193, 7, 0.3) 100%);
+    box-shadow: 0 10px 30px rgba(255, 152, 0, 0.4), 0 0 0 1px rgba(255, 152, 0, 0.6);
+}
+
+.heatmap-toggle .toggle-icon {
+    width: 12px;
+    height: 12px;
+    transition: all 0.3s ease;
+    z-index: 1;
+    position: relative;
+}
+
+.heatmap-toggle:hover .toggle-icon {
+    transform: scale(1.1);
+}
+
+.heatmap-toggle.active .toggle-icon {
+    color: #ff9800;
+}
+
+/* Time Horizon Control - Bottom Right */
+.time-horizon-control {
+    position: fixed;
+    bottom: 15px;
+    right: 20px;
+    z-index: 1000;
+    pointer-events: auto;
+}
+
+.time-horizon-control .control-group {
+    background: linear-gradient(135deg, rgba(10, 10, 20, 0.9) 0%, rgba(20, 20, 40, 0.9) 100%);
+    padding: 12px 16px;
+    border-radius: 15px;
+    border: 1px solid rgba(100, 181, 246, 0.2);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(100, 181, 246, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 200px;
+}
+
+.time-horizon-control label {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+}
+
+.time-horizon-control .time-slider {
+    flex: 1;
+    height: 4px;
+    background: rgba(100, 181, 246, 0.2);
+    border-radius: 2px;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.time-horizon-control .time-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(100, 181, 246, 0.3);
+}
+
+.time-horizon-control .time-slider::-webkit-slider-thumb:hover {
+    background: linear-gradient(135deg, #42a5f5 0%, #2196f3 100%);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(100, 181, 246, 0.4);
+}
+
+.time-horizon-control .time-value {
+    color: #64b5f6;
+    font-weight: 600;
+    min-width: 30px;
+    text-align: right;
+    font-size: 12px;
+}
+
+.time-horizon-control .risk-slider {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 152, 0, 0.2);
+    border-radius: 2px;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.time-horizon-control .risk-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+}
+
+.time-horizon-control .risk-slider::-webkit-slider-thumb:hover {
+    background: linear-gradient(135deg, #ff5722 0%, #f44336 100%);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+}
+
+.time-horizon-control .risk-value {
+    color: #ff9800;
+    font-weight: 600;
+    min-width: 30px;
+    text-align: right;
+    font-size: 12px;
+}
+
+/* Loading and Error States */
+.loading-container, .error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #000;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #333;
+    border-top: 5px solid #007acc;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error-container h3 {
+    color: #ff4444;
+    margin-bottom: 10px;
+}
+
+.error-container button {
+    padding: 10px 20px;
+    background: #007acc;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.error-container button:hover {
+    background: #0099ff;
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        top: 10px;
+    }
+    
+    .header-content {
+        padding: 10px 16px;
+    }
+    
+    .header-icon {
+        width: 30px;
+        height: 30px;
+        margin-bottom: 6px;
+    }
+    
+    .header-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .page-header h1 {
+        font-size: 18px;
+        margin-bottom: 4px;
+    }
+    
+    .page-header p {
+        font-size: 11px;
+        margin-bottom: 6px;
+    }
+    
+    .collision-controls {
+        gap: 6px;
+    }
+    
+    .collision-toggle,
+    .heatmap-toggle {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+    
+    .toggle-icon {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .time-horizon-control {
+        bottom: 10px;
+        right: 15px;
+    }
+    
+    .time-horizon-control .control-group {
+        padding: 8px 12px;
+        min-width: 160px;
+    }
+    
+    .time-horizon-control label {
+        font-size: 11px;
+    }
+    
+    .time-horizon-control .time-value {
+        font-size: 11px;
+        min-width: 25px;
+    }
+    
+    .time-horizon-control .risk-value {
+        font-size: 11px;
+        min-width: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header {
+        top: 8px;
+    }
+    
+    .header-content {
+        padding: 8px 12px;
+    }
+    
+    .header-icon {
+        width: 28px;
+        height: 28px;
+        margin-bottom: 4px;
+    }
+    
+    .header-icon svg {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .page-header h1 {
+        font-size: 16px;
+        margin-bottom: 3px;
+    }
+    
+    .page-header p {
+        font-size: 10px;
+        margin-bottom: 4px;
+    }
+    
+    .collision-controls {
+        gap: 4px;
+        flex-direction: column;
+    }
+    
+    .collision-toggle,
+    .heatmap-toggle {
+        padding: 5px 10px;
+        font-size: 10px;
+    }
+    
+    .toggle-icon {
+        width: 9px;
+        height: 9px;
+    }
+    
+    .time-horizon-control {
+        bottom: 8px;
+        right: 10px;
+    }
+    
+    .time-horizon-control .control-group {
+        padding: 6px 10px;
+        min-width: 140px;
+    }
+    
+    .time-horizon-control label {
+        font-size: 10px;
+    }
+    
+    .time-horizon-control .time-value {
+        font-size: 10px;
+        min-width: 20px;
+    }
+    
+    .time-horizon-control .risk-value {
+        font-size: 10px;
+        min-width: 20px;
+    }
+}

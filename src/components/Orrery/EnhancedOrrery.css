@@ -1,0 +1,131 @@
+.enhanced-orrery {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: #000;
+}
+
+.orrery-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.collision-controls {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.collision-toggle {
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #333;
+    border-radius: 25px;
+    color: #ccc;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.collision-toggle:hover {
+    background: rgba(0, 0, 0, 0.9);
+    border-color: #555;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.collision-toggle.active {
+    background: linear-gradient(135deg, #007acc, #0099ff);
+    border-color: #007acc;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 122, 204, 0.3);
+}
+
+.collision-toggle.active:hover {
+    background: linear-gradient(135deg, #0099ff, #00aaff);
+    box-shadow: 0 6px 20px rgba(0, 122, 204, 0.4);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .collision-controls {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        transform: none;
+        justify-content: center;
+    }
+    
+    .collision-toggle {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+}
+
+/* Additional styles for collision detection integration */
+.enhanced-orrery .collision-risk-panel,
+.enhanced-orrery .alert-system,
+.enhanced-orrery .prediction-overlay,
+.enhanced-orrery .risk-heatmap {
+    position: fixed;
+    z-index: 1000;
+}
+
+/* Ensure proper layering */
+.enhanced-orrery .collision-risk-panel {
+    top: 20px;
+    right: 20px;
+}
+
+.enhanced-orrery .alert-system {
+    top: 20px;
+    left: 20px;
+}
+
+.enhanced-orrery .prediction-overlay {
+    bottom: 20px;
+    left: 20px;
+}
+
+.enhanced-orrery .risk-heatmap {
+    bottom: 20px;
+    right: 20px;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .enhanced-orrery .collision-risk-panel {
+        top: 60px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+    }
+    
+    .enhanced-orrery .alert-system {
+        top: 60px;
+        left: 10px;
+        right: 10px;
+    }
+    
+    .enhanced-orrery .prediction-overlay {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+    }
+    
+    .enhanced-orrery .risk-heatmap {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+    }
+}
+

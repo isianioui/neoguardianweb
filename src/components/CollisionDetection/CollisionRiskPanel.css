@@ -1,0 +1,253 @@
+.collision-risk-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 350px;
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.collision-risk-panel.expanded {
+    height: 600px;
+    overflow-y: auto;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s ease;
+}
+
+.panel-header:hover {
+    background: linear-gradient(135deg, #2a2a2a, #3d3d3d);
+}
+
+.panel-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.toggle-icon {
+    font-size: 12px;
+    color: #ccc;
+    transition: transform 0.3s ease;
+}
+
+.panel-content {
+    padding: 20px;
+    height: calc(100% - 60px);
+    overflow-y: auto;
+}
+
+.risk-statistics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    border-left: 3px solid #666;
+}
+
+.stat-item.high-risk {
+    border-left-color: #ff4444;
+}
+
+.stat-item.medium-risk {
+    border-left-color: #ffaa00;
+}
+
+.stat-item.low-risk {
+    border-left-color: #44ff44;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #ccc;
+}
+
+.stat-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #ccc;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.filter-btn.active {
+    background: #007acc;
+    border-color: #007acc;
+    color: #fff;
+}
+
+.risk-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.risk-item {
+    margin-bottom: 10px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    border-left: 4px solid #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.risk-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(2px);
+}
+
+.risk-item.selected {
+    background: rgba(0, 122, 204, 0.2);
+    border-left-color: #007acc;
+}
+
+.risk-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.risk-icon {
+    font-size: 16px;
+    margin-right: 8px;
+}
+
+.risk-category {
+    font-size: 14px;
+    font-weight: 600;
+    flex: 1;
+}
+
+.risk-probability {
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffaa00;
+    background: rgba(255, 170, 0, 0.2);
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.risk-details {
+    font-size: 12px;
+    color: #ccc;
+}
+
+.object-pair {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.object1, .object2 {
+    font-weight: 600;
+    color: #fff;
+}
+
+.vs {
+    margin: 0 8px;
+    color: #666;
+    font-size: 10px;
+}
+
+.risk-metrics {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #999;
+}
+
+.no-risks {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 20px;
+}
+
+/* Scrollbar styling */
+.risk-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.risk-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.risk-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.risk-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .collision-risk-panel {
+        width: calc(100% - 40px);
+        right: 20px;
+        left: 20px;
+    }
+    
+    .risk-statistics {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-controls {
+        justify-content: center;
+    }
+    
+    .risk-metrics {
+        flex-direction: column;
+        gap: 2px;
+    }
+}
+
