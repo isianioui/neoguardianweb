@@ -95,14 +95,14 @@ const ContactSection = () => {
               <Phone className="contact-icon" />
               <div>
                 <h4>Phone</h4>
-                <p>0600000000</p>
+                <p>+212 706884954</p>
               </div>
             </div>
             <div className="contact-item">
               <MapPin className="contact-icon" />
               <div>
                 <h4>Location</h4>
-                <p>Marrakech <br />SYBA</p>
+                <p>Marrakech , Morocco <br /></p>
               </div>
             </div>
           </div>

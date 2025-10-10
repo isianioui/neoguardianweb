@@ -29,11 +29,7 @@ const AboutSection = () => {
       title: "Global Orbit Visualization",
       description: "Interactive 3D views of satellite and NEO trajectories around Earth"
     },
-    {
-      icon: <Map />,
-      title: "Ground Track Maps",
-      description: "See upcoming passes, footprints, and corridor projections on Earth maps"
-    },
+    
     {
       icon: <Activity />,
       title: "Live Telemetry",
